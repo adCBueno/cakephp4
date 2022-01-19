@@ -16,6 +16,10 @@
 
 
 
+
+
+
+
      
 <!DOCTYPE html>
 
@@ -94,7 +98,7 @@
 
 
     <div class="container">
-        <h3 class="m-0">Información Categorias</h3> <br>
+        <h3 class="m-0">Información Categorias</h3>
     </div>
 
 
@@ -123,7 +127,7 @@
                             <div class="card-body">
                                 <div class="form-group">                                    
                                     <?php
-                                    echo $this->Form->control('nombre', ['label'=>'Nombre de la categoria', 'class'=>'form-control']);
+                                    echo $this->Form->control('nombre', ['label'=>'Nombre de la categoria','class'=>'form-control']);
                                     ?>
                                 </div>
 
@@ -131,6 +135,10 @@
                                 <label for="exampleInputPassword1">Descripción</label>
                                     <?php
                                     echo $this->Form->textarea('descripcion', ['label'=>'Descripción', 'class'=>'form-control']);
+                                       
+                                    ?>
+                                    <?php
+                                echo $this->Form->hidden('edicion',['value'=>0]);
                                     ?>
                                 </div>
                             </div>
@@ -151,7 +159,7 @@
         </div>
     </div>
 
-
+<br>
 
                     
     
@@ -163,6 +171,136 @@
 
             
            
+
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Todas las categorias</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th style="width: 10px">id</th>
+                      <th class="col-md-1">Categoria</th>
+                      <th class="col-md-7">Descripción</th>
+                      <th class="col-md-1">Acción</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                      <?php foreach($categorias as $cat): ?>
+                    <tr>
+                      <td> <?php echo $cat['id']; ?></td>
+                      <td> <?php echo $cat['nombre']; ?> </td>
+                      <td>
+                        <p>  <?php echo $cat['descripcion']; ?>  </p>
+                     </td>
+                      
+                       
+                            <td>
+                            <?php  echo $this->Html->link('Ver',['action'=>'view',$cat['id']],['class'=>'btn btn-block btn-primary']); ?>
+                             
+                            </td>
+
+                            <td>
+                            <button type="button" class="btn btn-block btn-warning" 
+                            data-toggle="modal"
+                            data-target="#modal-editar-categoria-<?php echo $cat['id']?>">
+                                Editar
+                            </button>  
+
+                            <div class="modal fade" id="modal-editar-categoria-<?php echo $cat['id']?>">
+                              <div class="modal-dialog">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Formulario de Edición</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    
+                                    <div class="modal-body">
+                                        <?= $this->Form->create($categoria) ?>
+                                                <div class="card-body">
+                                                    <div class="form-group">                                    
+                                                        <?php
+                                                        echo $this->Form->control('nombre', ['label'=>'Nombre de la categoria',  'value'=>$cat['nombre'] , 'class'=>'form-control']);
+                                                        ?>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                    <label for="exampleInputPassword1">Descripción</label>
+                                                        <?php
+                                                        echo $this->Form->textarea('descripcion', ['label'=>'Descripción',  'value'=>$cat['descripcion'] ,'class'=>'form-control']);
+                                                     
+                                                      ?>
+                                                      <?php
+                                                         echo $this->Form->hidden('edicion',['value'=>1]);
+                                                         echo $this->Form->hidden('id',['value'=>$cat['id']]);
+                                                      ?>
+                                                    </div>
+                                                </div>
+                                                <!-- /.card-body -->
+                                                <div class="card-footer">
+                                                <?= $this->Form->button(__('Submit'), ['class'=>'btn btn-primary']) ?>
+
+                                                </div>
+                                        <?= $this->Form->end() ?>
+                                    </div>
+
+                                 </div>               
+                             </div>
+          
+                             </div>
+        
+
+
+                         
+                         
+                         
+                          
+                            </td>
+
+                            <td>
+                           <?= $this->Form->postLink(
+                               __('Eliminar'),
+                               ['action'=>'delete',$cat->id],
+                               ['confirm'=>__('¿Desea eliminar la categoria {0}?',$cat->nombre), 'class'=>'btn btn-block btn-danger']
+                           )
+                           ?>
+                            </td>                               
+                    </tr>
+                    <?php endforeach; ?>      
+
+                  </tbody>
+
+                </table>
+
+              </div>
+
+
+              <!-- /.card-body -->
+              <div class="card-footer clearfix">
+                <ul class="pagination pagination-sm m-0 float-right">
+                  <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
+                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+                </ul>
+              </div>
+            </div>
+            <!-- /.card -->
+      </div>
+    </section>
+
+
+
+
 
 
 
@@ -218,3 +356,29 @@
 </body>
 
 </html>
+           
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
