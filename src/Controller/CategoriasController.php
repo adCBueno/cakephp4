@@ -19,9 +19,22 @@ class CategoriasController extends AppController
     public function index()
     {
 
+        //debug($this->getData('edicion')==0){
+
+       // }
+
+       if($this->request->getData('edicion')==0){
+           $categoria = $this->Categorias->newEmptyEntity();
+       } else{
+           $categoria = $this->Categorias->get($this->request->getData('id'),[
+               'contain' => []
+           ]);
+       }
+
+
         //print_r($this->request);
         //exit;
-        $categoria = $this->Categorias->newEmptyEntity();
+      //  $categoria = $this->Categorias->newEmptyEntity();
         if ($this->request->is('post')) {
            
             $categoria = $this->Categorias->patchEntity($categoria, $this->request->getData());
